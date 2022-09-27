@@ -259,9 +259,10 @@ def minimax(menu, board, player, positions, pieces, section_values, alpha=-10000
             if alpha >= beta:
                 # if this occurs, we can prune and value will not change in parent
                 # outside eval range - best_son doesnt get rewritten
+                # we dont care about the position returned unless its the last free space
                 if player == 1:
-                    return 100000, (0, 0)
-                else: return -100000, (0,0)
+                    return 100000, current_position
+                else: return -100000, current_position
 
         last_position = current_position
 
