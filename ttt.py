@@ -232,10 +232,10 @@ def minimax(menu, board, player, positions, pieces, section_values, alpha=-10000
         row, col = current_position
         # NOTE: ošetřit remízu (zaplněné pole)
         znak = board[current_position[0]][current_position[1]]
-        # prohledavam stavovy prostor, rozvijim pozice, ktere jsou volne
+        # going through state space, expanding the free positions
         if znak == 0:
             fields_checked += 1
-            # vytvorim si kopii plochy, kterou muzu upravovat v rekurzi
+            # creates the copy of the board which can be edited in recursion
             xboard = []
             for i in range(len(board)):
                 inner = board[i].copy()
@@ -403,8 +403,8 @@ def play(ai_on):
                     pygame.display.update()
 
                     if ai_on and position != "invalid": 
-                        # spočítá celkem section values
-                        # musí se dělat v sekci hráče, za kterého spouštím v minimaxu eval funkci
+                        # calculates section values
+                        # must be done in the section of the player for whom I run the eval function
                         eval(board, player, [position, opposition], section_values)
 
                         player = - player
