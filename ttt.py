@@ -31,7 +31,8 @@ def create_board():
     return board
 
 
-def set(position, sign, board): board[position[0]][position[1]] = sign
+def set(position, sign, board): 
+    board[position[0]][position[1]] = sign
 
 
 def get_position(board, grid, sqsize, click):
@@ -40,7 +41,8 @@ def get_position(board, grid, sqsize, click):
     c = (click[0]-left)//sqsize + 1
     r = (click[1]-top)//sqsize + 1
     
-    if board[r][c] == 0: return (r, c)
+    if board[r][c] == 0: 
+        return (r, c)
     return "invalid"
 
 
@@ -90,7 +92,8 @@ def evaluate_section(section, player):
     # return the score for one list representing one row/column/diagonal by splitting it 
     # into smaller chunks which are evaled by eval_section
 
-    def _too_strong(points, sign, player): return points==100 or (points==50 and player==sign)
+    def _too_strong(points, sign, player): 
+        return points==100 or (points==50 and player==sign)
     
     combinations = {
         (-1, 1, 1, 1, 1, 0): 50,
@@ -174,6 +177,7 @@ def get_section(board, start, smer):
     
 
 def get_indices(positions):
+
     indices = []
     for position in positions:
         r, c = position
@@ -197,6 +201,7 @@ def get_indices(positions):
     
 
 def eval(board, player, positions, section_values):
+
     indices = get_indices(positions)
     for elem in indices:
         index, start, smer = elem
@@ -206,6 +211,7 @@ def eval(board, player, positions, section_values):
 
 
 def minimax(menu, board, player, positions, pieces, section_values, alpha=-100000, beta=100000, depth=1):
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT: sys.exit()
         if event.type == pygame.MOUSEBUTTONDOWN:
@@ -229,8 +235,6 @@ def minimax(menu, board, player, positions, pieces, section_values, alpha=-10000
     while fields_checked < min(MINIMAX_WIDTH, ROWS*COLUMNS-pieces):
         current_position, direction, t, b, l, r = \
             find_next(board, last_position, t, b, l, r, direction)
-        row, col = current_position
-        # NOTE: ošetřit remízu (zaplněné pole)
         znak = board[current_position[0]][current_position[1]]
         # going through state space, expanding the free positions
         if znak == 0:
@@ -272,6 +276,7 @@ def minimax(menu, board, player, positions, pieces, section_values, alpha=-10000
 
 
 def get_text(message, size, x, y):
+
     font = pygame.font.SysFont("verdana", size)
     text = font.render(message, 0, 0x0)
     text_area = text.get_rect(center=(x, y))
@@ -279,6 +284,7 @@ def get_text(message, size, x, y):
 
 
 def game_over_message(message):
+
     text, text_area = get_text(message, 35, WIDTH//2, HEIGHT//2)
     pygame.draw.rect(WIN, 0xffffff, text_area)
     WIN.blit(text, text_area)
@@ -287,6 +293,7 @@ def game_over_message(message):
 
 
 def draw_button(label, midx, midy, resize=1):
+
     text, text_area = get_text(label, int(30*resize), midx, midy)
     left, top = midx - BUTTON_WIDTH*resize//2, midy - BUTTON_HEIGHT*resize//2
 
@@ -296,11 +303,13 @@ def draw_button(label, midx, midy, resize=1):
 
 
 def on_object(object, click): 
+    
     return click[0] >= object[0] and click[0] <= object[0]+object[2] and click[1] >= object[1] \
         and click[1] <= object[1]+object[3]
 
 
 def startup():
+
     WIN.fill(0xffffff)
     title, title_coord = get_text("FIVE IN A ROW", 60, WIDTH//2, HEIGHT//8)
     WIN.blit(title, title_coord)
@@ -330,6 +339,7 @@ def startup():
 
 
 def playing_screen():
+
     grid_size = min(WIDTH, HEIGHT)*3//4
     midx, midy = WIDTH//2, HEIGHT//2
     left, top = midx - grid_size//2, midy*7//8 - grid_size//2
@@ -348,6 +358,7 @@ def playing_screen():
 
 
 def draw(board, grid, sqsize, position, highlighted=True):
+
     left, top = grid[0], grid[1]
     r, c = position
 
@@ -366,6 +377,7 @@ def draw(board, grid, sqsize, position, highlighted=True):
 
 
 def play(ai_on):
+
     WIN.fill(0xFFFFFF)
     grid_coord, sqsize, menu_button = playing_screen()
 
